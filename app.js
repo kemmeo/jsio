@@ -120,6 +120,7 @@ for(let i=0; i<width/100;i++){
   const size=iRandom(player.radius/2,player.radius*2);
   const color=colors[iRandom(0,colors.length-1)];
   const speed=iRandom(1,3);
+
   enemies[i]=new Ball(x,y,size,color,speed);
 }
 
@@ -139,11 +140,12 @@ function update(){
         let grow=enemies[i].radius/8;
         player.radius+=grow;
         enemies.splice(i,1);
-        //console.log("enemy destroyed");
+        //console.log("enemies destroyed");
       }
     }
-    if(this!==enemies[i]){
-      if(gap(this,enemies[i])<=(this.radius+enemies[i].radius)){
+    for(let i=0;i<enemies.length;i++){
+      if(this===enemies[i]){continue;}
+      if(gap(this,enemies[i])-(this.radius+enemies[i].radius)){
         this.xVel,this.yVel,enemies[i].xVel,enemies[i].yVel*=-1;
       }
     }
