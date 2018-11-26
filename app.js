@@ -113,21 +113,23 @@ player.touch=(e)=>{
 let enemy=[];
 let colors=["#f27979","#8ff279","#969df2","#f096f2"];
 for(let i=0; i<width/75;i++){
-  let x=iRandom(0,width);
-  let y=iRandom(0,height/2);
-  const size=iRandom(player.radius/1.4,player.radius*1.5);
+  const radius=iRandom(player.radius/1.4,player.radius*1.5);
+  let x=iRandom(radius,width-radius);
+  let y=iRandom(radius,height/2-radius);
   const color=colors[iRandom(0,colors.length-1)];
   const speed=iRandom(1,3);
-  enemy[i]=new Ball(x,y,size,color,speed);
-  if(enemy[i]!==0){
+  if(enemy.length!==0){
     for(let j=0;j<enemy.length;j++){
-      if(gap(this,enemy[j])-(this.radius+enemy[j].radius)<=0){
+      if(Math.hypot(x-enemy[j].x,y-enemy[j].y)<=(radius+enemy[j].radius)){
+      //if(gap(this,enemy[j])<=(this.radius+enemy[j].radius)){
         x=iRandom(0,width);
         y=iRandom(0,height/2);
         j=-1;
+        //console.log("relocating enemy");
       }
     }
   }
+  enemy[i]=new Ball(x,y,radius,color,speed);
 }
 
 // game loop
@@ -140,6 +142,7 @@ function update(){
 
   // check for collision with player
   for(let i=0;i<enemy.length;i++){
+    enemy[i].update();
     if(gap(enemy[i],player)<=(player.radius+enemy[i].radius)){
       // grow player size & destroy enemy
       if(player.radius>=enemy[i].radius){
@@ -148,7 +151,15 @@ function update(){
         player.radius+=grow;
       }
     }
-    enemy[i].update();
+    for(let j=0;j<enemy.length;j++){
+      if(this===enemy[j]){continue;}
+      else{
+        if(gap(this,enemy[j])<=(this.radius+enemy[j].radius)){
+          this.xVel*=-1; this.yVel*=-1;
+          enemy[j].xVel*=-1; enemy[j].yVel*=-1;
+        }
+      }
+    }
   }
 
   // update player
