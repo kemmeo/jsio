@@ -12,13 +12,6 @@ if("serviceWorker" in navigator){
 const c=document.querySelector("canvas").getContext("2d");
 let width,height;
 
-// mock antialiasing
-function smoothing(){
-  c.translate(.5,.5);
-  c.lineWidth=.5;
-}
-smoothing();
-
 // resize canvas to fit window
 function resize(){
   width=c.canvas.width=window.innerWidth;
@@ -46,6 +39,13 @@ function lerp(origin,goal,rate) {
 function gap(a,b){
   return Math.hypot(a.x-b.x,a.y-b.y);
 }
+
+// mock antialiasing
+function smoothing(){
+  c.translate(.5,.5);
+  c.lineWidth=.5;
+}
+smoothing();
 
 // Ball constructor
 class Ball{
