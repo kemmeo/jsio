@@ -108,10 +108,10 @@ player.touch=(e)=>{
 
 let enemies=[];
 let colors=["#f27979","#8ff279","#969df2","#f096f2"];
-for(let i=0; i<width/100;i++){
+for(let i=0; i<width/75;i++){
   let x=iRandom(0,width);
   let y=iRandom(0,height);
-  const size=iRandom(player.radius/2,player.radius*2);
+  const size=iRandom(player.radius/1.5,player.radius*1.5);
   const color=colors[iRandom(0,colors.length-1)];
   const speed=iRandom(1,3);
 
@@ -132,8 +132,9 @@ function update(){
       // grow player size & destroy enemy
       if(player.radius>=enemies[i].radius){
         let grow=enemies[i].radius/8;
-        player.radius+=grow;
         enemies.splice(i,1);
+        player.radius+=grow;
+        
         //console.log("enemies destroyed");
       }
     }
