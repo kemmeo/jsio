@@ -47,12 +47,6 @@ function gap(a,b){
   return Math.hypot(a.x-b.x,a.y-b.y);
 }
 
-// check if value is between min and max
-function within(value,min,max){
-  if(value>=min&&value<=max){return true;}
-  else{return false;}
-}
-
 // Ball constructor
 class Ball{
   constructor(x,y,radius,color,velocity){
