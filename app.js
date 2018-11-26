@@ -57,6 +57,7 @@ class Ball{
     this.xVel=velocity;
     this.yVel=velocity;
   }
+  // Ball draw method
   draw(){
     c.beginPath();
     c.fillStyle=this.color;
@@ -68,6 +69,7 @@ class Ball{
     c.shadowOffsetY=5;
     c.closePath();
   }
+  // Ball update method
   update(){
     if(this.x<this.radius){
       this.x=this.radius;
@@ -92,13 +94,15 @@ class Ball{
 }
 
 // player object
-let player=new Ball(width/2,height/2,40,"#00b9b8",0);
+let player=new Ball(width/2,height*0.75,40,"#00b9b8",0);
+
 // handle mouse input
 player.mouse=(e)=>{
   let mX=e.pageX, mY=e.pageY;
   player.x=clamp(lerp(player.x,mX,0.8),player.radius,width-player.radius);
   player.y=clamp(lerp(player.y,mY,0.8),player.radius,height-player.radius);
 }
+
 // handle touch input
 player.touch=(e)=>{
   let tX=e.targetTouches[0].pageX, tY=e.targetTouches[0].pageY;
@@ -106,16 +110,16 @@ player.touch=(e)=>{
   player.y=clamp(lerp(player.y,tY,0.8),player.radius,height-player.radius);
 }
 
-let enemies=[];
+let enemy=[];
 let colors=["#f27979","#8ff279","#969df2","#f096f2"];
 for(let i=0; i<width/75;i++){
   let x=iRandom(0,width);
   let y=iRandom(0,height);
-  const size=iRandom(player.radius/1.5,player.radius*1.5);
+  const size=iRandom(player.radius/1.4,player.radius*1.5);
   const color=colors[iRandom(0,colors.length-1)];
   const speed=iRandom(1,3);
 
-  enemies[i]=new Ball(x,y,size,color,speed);
+  enemy[i]=new Ball(x,y,size,color,speed);
 }
 
 // game loop
@@ -127,27 +131,18 @@ function update(){
   c.fillRect(0,0,width,height);
 
   // check for collision with player
-  for(let i=0;i<enemies.length;i++){
-    if(gap(enemies[i],player)<=(player.radius+enemies[i].radius)){
+  for(let i=0;i<enemy.length;i++){
+    if(gap(enemy[i],player)<=(player.radius+enemy[i].radius)){
       // grow player size & destroy enemy
-      if(player.radius>=enemies[i].radius){
-        let grow=enemies[i].radius/8;
-        enemies.splice(i,1);
+      if(player.radius>=enemy[i].radius){
+        let grow=enemy[i].radius/8;
+        enemy.splice(i,1);
         player.radius+=grow;
-        
-        //console.log("enemies destroyed");
       }
     }
-    for(let i=0;i<enemies.length;i++){
-      if(this===enemies[i]){continue;}
-      if(gap(this,enemies[i])-(this.radius+enemies[i].radius)){
-        this.xVel,this.yVel,enemies[i].xVel,enemies[i].yVel*=-1;
-      }
-    }
-    enemies[i].update();
+    enemy[i].update();
   }
   player.update();
-  //console.log("updated");
 }
 update();
 
