@@ -110,22 +110,24 @@ player.touch=(e)=>{
   player.y=clamp(lerp(player.y,tY,0.8),player.radius,height-player.radius);
 }
 
+// array of enemy objects
 let enemy=[];
+// array of possible enemy colors
 let colors=["#f27979","#8ff279","#969df2","#f096f2"];
-for(let i=0; i<width/75;i++){
+// loop creating enemy objects
+for(let i=0; i<Math.floor(width/75);i++){
   const radius=iRandom(player.radius/1.4,player.radius*1.5);
   let x=iRandom(radius,width-radius);
   let y=iRandom(radius,height/2-radius);
   const color=colors[iRandom(0,colors.length-1)];
-  const speed=iRandom(1,3);
+  const speed=iRandom(-4,4);
   if(enemy.length!==0){
     for(let j=0;j<enemy.length;j++){
       if(Math.hypot(x-enemy[j].x,y-enemy[j].y)<=(radius+enemy[j].radius)){
-      //if(gap(this,enemy[j])<=(this.radius+enemy[j].radius)){
         x=iRandom(0,width);
         y=iRandom(0,height/2);
         j=-1;
-        //console.log("relocating enemy");
+        console.log("relocating enemy");
       }
     }
   }
@@ -149,15 +151,14 @@ function update(){
         let grow=enemy[i].radius/8;
         enemy.splice(i,1);
         player.radius+=grow;
+        console.log("enemy destroyed");
       }
     }
     for(let j=0;j<enemy.length;j++){
-      if(this===enemy[j]){continue;}
-      else{
-        if(gap(this,enemy[j])<=(this.radius+enemy[j].radius)){
-          this.xVel*=-1; this.yVel*=-1;
-          enemy[j].xVel*=-1; enemy[j].yVel*=-1;
-        }
+      if(enemy[i]===enemy[j]){continue;}
+      if(gap(enemy[i],enemy[j])<=(enemy[i].radius+enemy[j].radius)){
+        enemy[i].xVel*=-1; enemy[i].yVel*=-1;
+        enemy[j].xVel*=-1; enemy[j].yVel*=-1;
       }
     }
   }
