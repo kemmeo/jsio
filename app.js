@@ -118,8 +118,16 @@ for(let i=0; i<width/75;i++){
   const size=iRandom(player.radius/1.4,player.radius*1.5);
   const color=colors[iRandom(0,colors.length-1)];
   const speed=iRandom(1,3);
-
   enemy[i]=new Ball(x,y,size,color,speed);
+  if(enemy[i]!==0){
+    for(let j=0;j<enemy.length;j++){
+      if(gap(this,enemy[j])-(this.radius+enemy[j].radius)<=0){
+        x=iRandom(0,width);
+        y=iRandom(0,height/2);
+        j=-1;
+      }
+    }
+  }
 }
 
 // game loop
@@ -142,6 +150,8 @@ function update(){
     }
     enemy[i].update();
   }
+
+  // update player
   player.update();
 }
 update();
