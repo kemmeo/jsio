@@ -56,6 +56,7 @@ class Ball{
     this.color=color;
     this.xVel=velocity;
     this.yVel=velocity;
+    this.move=true;
   }
   // Ball draw method
   draw(){
@@ -87,8 +88,11 @@ class Ball{
       this.y=height-this.radius;
       this.yVel*=-1;
     }
-    this.x+=this.xVel;
-    this.y+=this.yVel;
+    if(this.move===true){
+      this.x+=this.xVel;
+      this.y+=this.yVel;
+    }
+    
     this.draw();
   }
 }
@@ -113,7 +117,7 @@ player.touch=(e)=>{
 // array of enemy objects
 let enemy=[];
 // array of possible enemy colors
-let colors=["#f27979","#8ff279","#969df2","#f096f2"];
+const colors=["#f27979","#8ff279","#969df2","#f096f2"];
 // loop creating enemy objects
 for(let i=0; i<Math.floor(width/75);i++){
   const radius=iRandom(player.radius/1.4,player.radius*1.5);
@@ -157,8 +161,11 @@ function update(){
     for(let j=0;j<enemy.length;j++){
       if(enemy[i]===enemy[j]){continue;}
       if(gap(enemy[i],enemy[j])<=(enemy[i].radius+enemy[j].radius)){
+        enemy[i].move=enemy[j].move=false;
         enemy[i].xVel*=-1; enemy[i].yVel*=-1;
         enemy[j].xVel*=-1; enemy[j].yVel*=-1;
+      }else{
+        enemy[i].move=enemy[j].move=true;
       }
     }
   }
