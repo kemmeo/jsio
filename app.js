@@ -152,7 +152,7 @@ function update(){
     if(gap(enemy[i],player)<=(player.radius+enemy[i].radius)){
       // grow player size & destroy enemy
       if(player.radius>=enemy[i].radius){
-        let grow=enemy[i].radius/8;
+        let grow=enemy[i].radius/6;
         enemy.splice(i,1);
         player.radius+=grow;
         console.log("enemy destroyed");
