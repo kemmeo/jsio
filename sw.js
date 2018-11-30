@@ -1,6 +1,6 @@
 const staticAssets=[
   "./",
-  "./style.css",
+  "./css/style.css",
   "./app.js",
   "./img"
 ];
