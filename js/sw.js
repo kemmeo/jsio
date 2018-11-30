@@ -1,7 +1,7 @@
 const staticAssets=[
   "./",
-  "./style.css",
-  "./app.js"
+  "./css/style.css",
+  "./js/app.js"
 ];
 
 self.addEventListener("install",async event=>{
