@@ -1,1 +1,2 @@
-canvas{display:block;overscroll-behavior-y:contain;}
+body{overscroll-behavior-y:contain;}
+canvas{display:block;}
