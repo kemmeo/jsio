@@ -1,2 +1,1 @@
-body{overscroll-behavior-y:contain;}
-canvas{display:block;}
+body{display:flex;overscroll-behavior-y:contain;}
