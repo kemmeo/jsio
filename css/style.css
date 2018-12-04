@@ -1,5 +1,1 @@
-body{
-  margin:0;
-  display:flex;
-  overscroll-behavior-y:contain;
-}
+canvas{display:block;overscroll-behavior-y:contain;}
